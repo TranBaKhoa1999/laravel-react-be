@@ -53,10 +53,10 @@ RUN chown -R www-data:www-data /var/www/html/laravel-react-app/backend/storage \
 # Cài đặt các package Laravel
 RUN composer install --optimize-autoloader --no-dev
 
-# Cấu hình Apache
+# Cấu hình Apache - giống httpd-vhost trên window
 COPY ./conf/apache-laravel.conf /etc/apache2/sites-available/000-default.conf
 
-# Copy start.sh vào thư mục /conf trong container và cấp quyền thực thi
+# Copy start.sh vào thư mục /conf trong container và cấp quyền thực thi -  file hosts
 COPY ./conf/start.sh /conf/start.sh
 RUN chmod +x /conf/start.sh
 
