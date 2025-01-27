@@ -18,7 +18,7 @@ return [
 
     'allowed_methods' => ['*'], // Cho phép tất cả các phương thức HTTP (GET, POST, PUT, DELETE, v.v.)
 
-    'allowed_origins' => ['*'], // Cấu hình các nguồn (origin) được phép. Đảm bảo là domain frontend của bạn.
+    'allowed_origins' => [env('FRONTEND_URL')], // Cấu hình các nguồn (origin) được phép. Đảm bảo là domain frontend của bạn.
 
     'allowed_origins_patterns' => [],
 
@@ -28,5 +28,7 @@ return [
 
     'allow_credentials' => true, // Cho phép gửi cookies (nếu cần thiết).
 
-    'max_age' => 0, // Thời gian cache cho preflight requests (bạn có thể tùy chỉnh).
+    'max_age' => 0, // Thời gian cache cho preflight requests (bạn có thể tùy chỉnh). ,
+
+    'supports_credentials' => true, // Đảm bảo bật chế độ cho phép credentials
 ];
