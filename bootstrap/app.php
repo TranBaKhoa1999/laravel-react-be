@@ -60,7 +60,7 @@ return Application::configure(basePath: dirname(__DIR__))
                         $response = printJson($e->getMessage(), buildStatusObject('UNPROCESSABLE_ENTITY'), $lang);
                         break;
                     default:
-                        $response = printJson($e->getMessage(), buildStatusObject('INTERNAL_SERVER_ERROR'), $lang);
+                        $response = printJson(null, buildStatusObject('INTERNAL_SERVER_ERROR'), $lang);
                 }
                 return $response;
             }
