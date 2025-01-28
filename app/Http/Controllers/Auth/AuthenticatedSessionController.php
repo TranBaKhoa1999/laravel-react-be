@@ -24,11 +24,12 @@ class AuthenticatedSessionController extends Controller
         $newToken = $user->createToken('api-token');
 
         // generate new token
-
-        return response()->json([
+        $result = [
             'user' => $user,
             'token' => $newToken->plainTextToken
-        ]);
+        ];
+
+        return printJson($result, buildStatusObject('HTTP_OK'), $this->lang);
     }
 
     /**
@@ -37,13 +38,13 @@ class AuthenticatedSessionController extends Controller
     public function destroy(Request $request): JsonResponse
     {
         Auth::guard('web')->logout();
-
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
 
-        return response()->json([
-            
-        ]);
+        $user = $request->user();
+        $user->tokens()->delete();
+        
+        return printJson(null, null, $this->lang);
     }
 }
