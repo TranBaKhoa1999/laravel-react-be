@@ -35,7 +35,7 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        Auth::login($user);
+        Auth::login($user); // auto login after register
 
         $token = $user->createToken('api-token');
 
