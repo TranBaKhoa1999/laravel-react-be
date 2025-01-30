@@ -40,7 +40,8 @@ class ProductsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $products = Product::find($id);
+        return printJson(new ProductResource($products), buildStatusObject('HTTP_OK'), $this->lang);
     }
 
     /**
