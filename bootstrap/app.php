@@ -6,6 +6,7 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -26,6 +27,9 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->alias([
             'verified' => \App\Http\Middleware\EnsureEmailIsVerified::class,
+            'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
+            'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
+            'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class
         ]);
 
         // $middleware->validateCsrfTokens(except: [
@@ -34,6 +38,9 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions) {
+        if(env('APP_DEBUG_WITHOUT_JSON', false)) {
+            return $exceptions;
+        }
         $exceptions->render(function (Throwable $e, Request $request) {
             if ($request->is('api/*')) {
                 $classException = get_class($e);
@@ -41,6 +48,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 if ($request->lang) {
                     $lang = $request->lang;
                 };
+
                 switch ($classException) {
                     case NotFoundHttpException::class:
                         $response =  printJson(null, buildStatusObject('PAGE_NOT_FOUND'), $lang);
@@ -49,6 +57,7 @@ return Application::configure(basePath: dirname(__DIR__))
                         $response = printJson(null, buildStatusObject('METHOD_NOT_ALLOWED'), $lang);
                         break;
                     case AccessDeniedHttpException::class:
+                    case UnauthorizedException::class:
                         $response = printJson(null, buildStatusObject('FORBIDDEN'), $lang);
                         break;
                     case UnauthorizedHttpException::class:
