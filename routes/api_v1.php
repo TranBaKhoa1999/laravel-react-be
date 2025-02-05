@@ -7,7 +7,11 @@ use Illuminate\Support\Facades\Route;
 
 
 // public routes
-Route::apiResource('products', ProductsController::class)->only(['index', 'show']);
+// Route::apiResource('products', ProductsController::class)->only(['index', 'show']);
+Route::get('/products/{slug_category?}', [ProductsController::class, 'index']);
+Route::get('/products/{slug_category}/{slug_product}', [ProductsController::class, 'show']);
+
+
 
 // Logged routes
 Route::middleware(['auth:sanctum'])->group(function () {
@@ -15,7 +19,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // admin routes
     Route::middleware(['role:' . User::ADMIN_ROLE])->group(function () {
         // need to except index/show routes to avoid require login
-        Route::apiResource('products', ProductsController::class)->except(['index', 'show']);
+        // Route::apiResource('products', ProductsController::class)->except(['index', 'show']);
     });
 
     // user routes
