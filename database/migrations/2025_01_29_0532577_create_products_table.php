@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->integer('stock')->default(0);
             $table->string('sku')->unique();
             $table->string('image')->nullable();
+            $table->foreignId('storage_id')->nullable()->constrained('storages')->onDelete('set null');
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

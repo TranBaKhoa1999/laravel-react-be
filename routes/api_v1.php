@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\CategoryController;
 use App\Http\Controllers\Api\V1\ProductsController;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -7,9 +8,10 @@ use Illuminate\Support\Facades\Route;
 
 
 // public routes
-// Route::apiResource('products', ProductsController::class)->only(['index', 'show']);
 Route::get('/products/{slug_category?}', [ProductsController::class, 'index']);
 Route::get('/products/{slug_category}/{slug_product}', [ProductsController::class, 'show']);
+Route::apiResource('categories', CategoryController::class)->only(['index', 'show']);
+
 
 
 

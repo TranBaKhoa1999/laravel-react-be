@@ -23,6 +23,7 @@ class ProductResource extends JsonResource
             'stock' => $this->stock,
             'sku' => $this->sku,
             'image' => $this->image,
+            'image_url' => $this->image_url,
             'category_id' => $this->category_id,
             'category' => $this->category, // Nếu bạn muốn bao gồm dữ liệu của category
             'created_at' => $this->created_at,

@@ -17,16 +17,16 @@ class ProductSeeder extends Seeder
     public function run() : void
     {
         $categories = [
-            1 => 'Điện thoại',
-            2 => 'Laptop',
-            3 => 'Máy tính bảng',
+            1 => ['name' => 'Điện thoại', 'image' => 'images/product/dienthoai.jpg'],
+            2 => ['name' => 'Laptop', 'image' => 'images/product/laptop.jpg'],
+            3 => ['name' => 'Máy tính bảng', 'image' => 'images/product/maytinhbang.jpg'],
         ];
 
         $products = [];
 
-        foreach ($categories as $categoryId => $categoryName) {
+        foreach ($categories as $categoryId => $category) {
             for ($i = 1; $i <= 10; $i++) {
-                $name = "$categoryName Sản phẩm $i";
+                $name = "{$category['name']} Sản phẩm $i";
                 $products[] = [
                     'name' => $name,
                     'slug' => Str::slug($name) . '-' . $i,
@@ -34,7 +34,7 @@ class ProductSeeder extends Seeder
                     'price' => rand(5000000, 30000000),
                     'stock' => rand(10, 100),
                     'sku' => strtoupper(Str::random(10)),
-                    'image' => 'https://via.placeholder.com/640x480.png?text=' . urlencode($name),
+                    'image' => $category['image'],
                     'category_id' => $categoryId,
                     'created_at' => now(),
                     'updated_at' => now(),

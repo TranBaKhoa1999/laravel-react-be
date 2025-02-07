@@ -59,4 +59,11 @@ class Product extends BaseModel
             $product->slug = Str::slug($product->name);
         });
     }
+
+    public function getImageUrlAttribute()
+    {
+       if($this->image) {
+           return Storage::getImageFile($this->image, $this->storage_id);
+       }
+    }
 }
