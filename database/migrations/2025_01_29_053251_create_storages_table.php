@@ -19,6 +19,12 @@ return new class extends Migration {
 
     public function down()
     {
+        if(Schema::hasTable('ads_creatives')) {
+            Schema::table('ads_creatives', function (Blueprint $table) {
+                $table->dropForeign(['storage_id']);
+            });
+        }
+
         Schema::dropIfExists('storages');
     }
     

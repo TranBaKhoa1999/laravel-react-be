@@ -1,6 +1,6 @@
 <?php
     
-    namespace App\Http\Controllers\Api\V1;
+    namespace App\Http\Controllers\Api\v1;
 
 
 use Illuminate\Http\Request;
@@ -11,6 +11,8 @@ use DB;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
     
+// not implemented yet
+
 class RoleController extends Controller
 {
     /**
