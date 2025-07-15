@@ -1,15 +1,17 @@
 <?php
 
+use App\Http\Controllers\Api\v1\AssistantController;
 use App\Http\Controllers\Api\v1\CategoryController;
 use App\Http\Controllers\Api\v1\ProductsController;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
 // public routes
 Route::get('/products/{slug_category?}', [ProductsController::class, 'index']);
 Route::get('/products/{slug_category}/{slug_product}', [ProductsController::class, 'show']);
+Route::post('/assistant', [AssistantController::class, 'getResponse']);
+
 Route::apiResource('categories', CategoryController::class)->only(['index', 'show']);
 
 

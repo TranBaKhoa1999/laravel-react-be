@@ -14,6 +14,9 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         //
+        $this->app->singleton('StatusCodeObjectClass', function ($app) {
+            return new StatusCodeObject;
+        });
     }
 
     /**
@@ -22,10 +25,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         require __DIR__ . '/../Helpers/Helper.php';
-
-        $this->app->singleton('StatusCodeObjectClass', function ($app) {
-            return new StatusCodeObject;
-        });
 
         ResetPassword::createUrlUsing(function (object $notifiable, string $token) {
             return config('app.frontend_url')."/password-reset/$token?email={$notifiable->getEmailForPasswordReset()}";
